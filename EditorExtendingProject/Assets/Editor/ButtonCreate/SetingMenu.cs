@@ -18,18 +18,19 @@ public class SetingMenu : EditorWindow
     public Object @object2;
     public static BookmarkSetting bookmarkSetting;
     private ObjectField[] objectFields = new ObjectField[4];
-    private void OnEnable()
-    {
 
-    }
     public void CreateMenu()
     {//BookmarkBar bookmarkBar
         SetingMenu graphEditorWindow = CreateInstance<SetingMenu>();
         graphEditorWindow.Show();
-        graphEditorWindow.Intialize();
-        graphEditorWindow.Load();
-        graphEditorWindow.SetValue();
+
         //BookmarkBar=bookmarkBar;
+    }
+    private void OnEnable()
+    {
+        Intialize();
+        Load();
+        SetValue();
     }
     private void Intialize() {
         VisualElement visualElement = this.rootVisualElement;
