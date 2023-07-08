@@ -5,36 +5,36 @@ using System.IO;
 using System.ServiceModel;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.UIElements;
-using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UIElements;
-using UnityEngine.WSA;
-
+/// <summary>
+/// スクリプトテンプレートを作成してくれるスクリプト
+/// </summary>
 public class TemplateCreatorWindow : EditorWindow
 {
+    //拡張ウィンドウの
     public VisualTreeAsset uIDocument = default;
-    private const string scriptTemplatesName = "ScriptTemplates";
+    //スクリプトテンプレート用txtの保存先フォルダパス
     private const string folderPath = "Assets/ScriptTemplates";
     private static readonly string defaultCode = @"
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+        using System;
+        using System.Collections;
+        using System.Collections.Generic;
+        using UnityEngine;
 
-public class #SCRIPTNAME# : MonoBehaviour
-{
-    void OnEnable()
-    {
+        public class #SCRIPTNAME# : MonoBehaviour
+        {
+            void OnEnable()
+            {
 
-    }
+            }
 
-    void OnDisable()
-    {
+            void OnDisable()
+            {
 
-    }
-}
+            }
+        }
     ";
+    //スクリプトテンプレート作成時に使う各種Text
     private string numbarText = default;
     private string menuText = default;
     private string defaultText = default;
@@ -42,24 +42,14 @@ public class #SCRIPTNAME# : MonoBehaviour
     public static void CreateWindow() {
         TemplateCreatorWindow templateCreatorWindow = CreateInstance<TemplateCreatorWindow>();
         templateCreatorWindow.Show();
-        //decimal= AssetDatabase.LoadAssetAtPath<Folder>(pathName);
         templateCreatorWindow.Load();
         templateCreatorWindow.Set();
         
 
     }
-    private void Intialize() {
-        //VisualElement visualElement = this.rootVisualElement;
-        //var text = new Box();
-        //text.Add(new Label("生成したいスクリプトテンプレート名を入力して下さい"));
-        //text.Add(new Label("生成したいスクリプトテンプレート名を入力して下さい２"));
-        //text.Add(new TextField());
-        //text.Add(new Label("完成予想です"));
-        //text.Add(new Label("＝＝＝＝＝.cs"));
-        //visualElement.Add(text);
-        if (uIDocument != default)
-            uIDocument.CloneTree(rootVisualElement);
-    }
+    /// <summary>
+    /// スクリプトテンプレートを保存するフォルダを検索して無かったら作成
+    /// </summary>
     private void Load() {
         if (!Directory.Exists(folderPath)) { 
             Directory.CreateDirectory(folderPath);
@@ -68,6 +58,9 @@ public class #SCRIPTNAME# : MonoBehaviour
             AssetDatabase.Refresh();
         }
     }
+    /// <summary>
+    /// 拡張ウィンドウの機能追加
+    /// </summary>
     private void Set() {
         var buton = this.rootVisualElement.Q<Button>("Create");
         buton.clicked += () =>
@@ -77,24 +70,35 @@ public class #SCRIPTNAME# : MonoBehaviour
         TextUpdate();
 
     }
+    /// <summary>
+    /// スクリプトテンプレート作成に使うTextの更新
+    /// </summary>
     private void TextUpdate() {
         numbarText = this.rootVisualElement.Q<TextField>("NumberText").text;
         menuText = this.rootVisualElement.Q<TextField>("MenuText").text;
         defaultText = this.rootVisualElement.Q<TextField>("DefaultText").text;
     }
+    /// <summary>
+    /// スクリプトテンプレート作成
+    /// </summary>
     private void ScriptCreate()
     {
         TextUpdate();
-        UnityEngine.Debug.Log("スクリプトを作成しました(生成名　ScriptTemplates)");
         var filepath = "Assets/ScriptTemplates/"+numbarText+"-"+ menuText + "-"+defaultText+".cs.txt";
-        var assetPath=AssetDatabase.GenerateUniqueAssetPath(filepath);
+        UnityEngine.Debug.Log("スクリプトを作成しました(生成名　"+numbarText + "-" + menuText + "-" + defaultText + ".cs.txt)");
+        var assetPath =AssetDatabase.GenerateUniqueAssetPath(filepath);
         File.WriteAllText(assetPath, defaultCode);
         AssetDatabase.ImportAsset(filepath);
         AssetDatabase.Refresh();
 
     }
+    /// <summary>
+    /// Unity画面での更新時に実行されます
+    /// </summary>
     private void OnEnable()
     {
-        Intialize();
+        if (uIDocument != default)
+            uIDocument.CloneTree(rootVisualElement);
+
     }
 }
