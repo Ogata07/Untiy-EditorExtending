@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// 生成させるObjectを保存するスクリプト
+/// 逕滓�舌＆縺帙ｋObject繧剃ｿ晏ｭ倥☆繧九せ繧ｯ繝ｪ繝励ヨ
 /// </summary>
 [CreateAssetMenu(fileName = "bookmarkSetting.asset", menuName = "BookmarkSetting")]
 public class BookmarkSetting : ScriptableObject
@@ -11,5 +9,5 @@ public class BookmarkSetting : ScriptableObject
 }
 [System.Serializable]
 public class Bookmark{ 
-    public GameObject GameObject;
+    public GameObject saveObject;
 }

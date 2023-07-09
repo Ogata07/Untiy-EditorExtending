@@ -1,19 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.ServiceModel;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine.UIElements;
 /// <summary>
-/// ƒXƒNƒŠƒvƒgƒeƒ“ƒvƒŒ[ƒg‚ðì¬‚µ‚Ä‚­‚ê‚éƒXƒNƒŠƒvƒg
+/// ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’ä½œæˆã—ã¦ãã‚Œã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
 public class TemplateCreatorWindow : EditorWindow
 {
-    //Šg’£ƒEƒBƒ“ƒhƒE‚Ì
+    //æ‹¡å¼µã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®
     public VisualTreeAsset uIDocument = default;
-    //ƒXƒNƒŠƒvƒgƒeƒ“ƒvƒŒ[ƒg—ptxt‚Ì•Û‘¶æƒtƒHƒ‹ƒ_ƒpƒX
+    //ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”¨txtã®ä¿å­˜å…ˆãƒ•ã‚©ãƒ«ãƒ€ãƒ‘ã‚¹
     private const string folderPath = "Assets/ScriptTemplates";
     private static readonly string defaultCode = @"
         using System;
@@ -34,7 +29,7 @@ public class TemplateCreatorWindow : EditorWindow
             }
         }
     ";
-    //ƒXƒNƒŠƒvƒgƒeƒ“ƒvƒŒ[ƒgì¬Žž‚ÉŽg‚¤ŠeŽíText
+    //ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆä½œæˆæ™‚ã«ä½¿ã†å„ç¨®Text
     private string numbarText = default;
     private string menuText = default;
     private string defaultText = default;
@@ -48,18 +43,18 @@ public class TemplateCreatorWindow : EditorWindow
 
     }
     /// <summary>
-    /// ƒXƒNƒŠƒvƒgƒeƒ“ƒvƒŒ[ƒg‚ð•Û‘¶‚·‚éƒtƒHƒ‹ƒ_‚ðŒŸõ‚µ‚Ä–³‚©‚Á‚½‚çì¬
+    /// ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’ä¿å­˜ã™ã‚‹ãƒ•ã‚©ãƒ«ãƒ€ã‚’æ¤œç´¢ã—ã¦ç„¡ã‹ã£ãŸã‚‰ä½œæˆ
     /// </summary>
     private void Load() {
         if (!Directory.Exists(folderPath)) { 
             Directory.CreateDirectory(folderPath);
             AssetDatabase.ImportAsset(folderPath);
-            UnityEngine.Debug.Log("ƒtƒHƒ‹ƒ_‚ª–¢ì¬‚¾‚Á‚½‚Ì‚Å¶¬‚µ‚Ü‚µ‚½(¶¬–¼@ScriptTemplates)");
+            UnityEngine.Debug.Log("ãƒ•ã‚©ãƒ«ãƒ€ãŒæœªä½œæˆã ã£ãŸã®ã§ç”Ÿæˆã—ã¾ã—ãŸ(ç”Ÿæˆåã€€ScriptTemplates)");
             AssetDatabase.Refresh();
         }
     }
     /// <summary>
-    /// Šg’£ƒEƒBƒ“ƒhƒE‚Ì‹@”\’Ç‰Á
+    /// æ‹¡å¼µã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®æ©Ÿèƒ½è¿½åŠ 
     /// </summary>
     private void Set() {
         var buton = this.rootVisualElement.Q<Button>("Create");
@@ -71,7 +66,7 @@ public class TemplateCreatorWindow : EditorWindow
 
     }
     /// <summary>
-    /// ƒXƒNƒŠƒvƒgƒeƒ“ƒvƒŒ[ƒgì¬‚ÉŽg‚¤Text‚ÌXV
+    /// ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆä½œæˆã«ä½¿ã†Textã®æ›´æ–°
     /// </summary>
     private void TextUpdate() {
         numbarText = this.rootVisualElement.Q<TextField>("NumberText").text;
@@ -79,22 +74,19 @@ public class TemplateCreatorWindow : EditorWindow
         defaultText = this.rootVisualElement.Q<TextField>("DefaultText").text;
     }
     /// <summary>
-    /// ƒXƒNƒŠƒvƒgƒeƒ“ƒvƒŒ[ƒgì¬
+    /// ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆä½œæˆ
     /// </summary>
     private void ScriptCreate()
     {
         TextUpdate();
         var filepath = "Assets/ScriptTemplates/"+numbarText+"-"+ menuText + "-"+defaultText+".cs.txt";
-        UnityEngine.Debug.Log("ƒXƒNƒŠƒvƒg‚ðì¬‚µ‚Ü‚µ‚½(¶¬–¼@"+numbarText + "-" + menuText + "-" + defaultText + ".cs.txt)");
+        UnityEngine.Debug.Log("ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ä½œæˆã—ã¾ã—ãŸ(ç”Ÿæˆåã€€"+numbarText + "-" + menuText + "-" + defaultText + ".cs.txt)");
         var assetPath =AssetDatabase.GenerateUniqueAssetPath(filepath);
         File.WriteAllText(assetPath, defaultCode);
         AssetDatabase.ImportAsset(filepath);
         AssetDatabase.Refresh();
 
     }
-    /// <summary>
-    /// Unity‰æ–Ê‚Å‚ÌXVŽž‚ÉŽÀs‚³‚ê‚Ü‚·
-    /// </summary>
     private void OnEnable()
     {
         if (uIDocument != default)
