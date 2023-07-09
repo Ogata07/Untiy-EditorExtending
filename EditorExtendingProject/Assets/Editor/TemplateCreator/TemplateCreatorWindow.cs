@@ -33,7 +33,7 @@ public class TemplateCreatorWindow : EditorWindow
     private string numbarText = default;
     private string menuText = default;
     private string defaultText = default;
-    [MenuItem("Tool/GraphEditorWindow")]
+    [MenuItem("Tool/TemplateCreator")]
     public static void CreateWindow() {
         TemplateCreatorWindow templateCreatorWindow = CreateInstance<TemplateCreatorWindow>();
         templateCreatorWindow.Show();

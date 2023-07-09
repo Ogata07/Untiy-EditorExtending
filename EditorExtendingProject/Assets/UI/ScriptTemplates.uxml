@@ -3,7 +3,7 @@
         <ui:Label text="作成したいスクリプトの各種項目を入力してください" display-tooltip-when-elided="true" />
         <ui:TextField picking-mode="Ignore" label="表示順番号" value="filler text" text="95" name="NumberText" />
         <ui:TextField picking-mode="Ignore" label="メニュの項目名" value="filler text" text="CreateC＃" name="MenuText" />
-        <ui:TextField picking-mode="Ignore" label="ファイルのデフォルト名" value="filler text" text="NewScript" name="DefaultText" />
+        <ui:TextField picking-mode="Ignore" label="テンプレートのデフォルト名" value="filler text" text="NewScript" name="DefaultText" />
         <ui:Label text="スクリプトテンプレートを使う場合は一度Unityを開きなおして下さい" display-tooltip-when-elided="true" />
     </ui:GroupBox>
     <ui:GroupBox name="ButtonGroup" style="flex-direction: row; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
