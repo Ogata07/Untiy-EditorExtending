@@ -4,33 +4,37 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Toolbar = UnityEditor.Toolbar;
-
-public  class BookmarkBar 
+/// <summary>
+/// ç”Ÿæˆãƒœã‚¿ãƒ³ã¨è¨­å®šãƒœã‚¿ãƒ³ã®ä½œæˆã‚¯ãƒ©ã‚¹
+/// </summary>
+public class BookmarkBar 
 {
-    public BookmarkSetting BookmarkSetting { get; set; }
-    private static ToolbarButton[] toolbarButtonArray=new ToolbarButton[3];
+    private static readonly ToolbarButton[] toolbarButtonArray=new ToolbarButton[3];
     [InitializeOnLoadMethod]
     private static void InitializeOnLoad()
     {
-        //XV‚É’Ç‰Á‚Ì‹@”\‚ğ‚µ‚Ä‚à‚ç‚¤
+        //æ›´æ–°æ™‚ã«è¿½åŠ ã®æ©Ÿèƒ½ã‚’ã—ã¦ã‚‚ã‚‰ã†
         EditorApplication.update += OnUpdate;
     }
+    /// <summary>
+    /// å„ç¨®ãƒœã‚¿ãƒ³ã®ä½œæˆ
+    /// </summary>
     private static void OnUpdate()
     {
-        SetingMenu setingMenu = new SetingMenu();
+        SetingMenu setingMenu = new();
 
 
         var toolbar = Toolbar.get;
-        if (toolbar.windowBackend?.visualTree is not VisualElement visualTree) return; // ƒc[ƒ‹ƒo[‚ÌVisualTree‚ğæ“¾
-        if (visualTree.Q("ToolbarZoneLeftAlign") is not { } leftZone) return; // ƒc[ƒ‹ƒo[¶‘¤‚Ìƒ][ƒ“‚ğæ“¾
-        EditorApplication.update -= OnUpdate; // •`‰æ‚Íˆê‰ñ‚Ì‚İ‚Å‚æ‚¢ 
+        if (toolbar.windowBackend?.visualTree is not VisualElement visualTree) return; // ãƒ„ãƒ¼ãƒ«ãƒãƒ¼ã®VisualTreeã‚’å–å¾—
+        if (visualTree.Q("ToolbarZoneLeftAlign") is not { } leftZone) return; // ãƒ„ãƒ¼ãƒ«ãƒãƒ¼å·¦å´ã®ã‚¾ãƒ¼ãƒ³ã‚’å–å¾—
+        EditorApplication.update -= OnUpdate; // æç”»ã¯ä¸€å›ã®ã¿ã§ã‚ˆã„ 
 
-        // VisualElement‚Ì’Ç‰Á
-        //¶¬ƒ{ƒ^ƒ“
+        // VisualElementã®è¿½åŠ 
+        //ç”Ÿæˆãƒœã‚¿ãƒ³
         for (int count = 0; count < toolbarButtonArray.Count(); count++) {
             toolbarButtonArray[count] = new ToolbarButton();
             
-            toolbarButtonArray[count].Add(new Label("¶¬" + (count + 1).ToString()) {
+            toolbarButtonArray[count].Add(new Label("ç”Ÿæˆ" + (count + 1).ToString()) {
                 style = {
                 fontSize = 10,
                 unityFontStyleAndWeight= new StyleEnum<FontStyle>(FontStyle.Bold)
@@ -42,14 +46,13 @@ public  class BookmarkBar
             });
             leftZone.Add(toolbarButtonArray[count]);
         }
-        toolbarButtonArray[0].clicked += () => setingMenu.pase(1);
-        toolbarButtonArray[1].clicked += () => setingMenu.pase(2);
-        toolbarButtonArray[2].clicked += () => setingMenu.pase(3);
-        //İ’èƒ{ƒ^ƒ“
-
+        toolbarButtonArray[0].clicked += () => setingMenu.Create(1);
+        toolbarButtonArray[1].clicked += () => setingMenu.Create(2);
+        toolbarButtonArray[2].clicked += () => setingMenu.Create(3);
+        //è¨­å®šãƒœã‚¿ãƒ³
         var sampleButton = new ToolbarButton()
         {
-            // ‰æ‘œ‚É‚æ‚Á‚Äƒ{ƒ^ƒ“‚ª‘å‚«‚­‚È‚è‚·‚¬‚Ä‚µ‚Ü‚í‚È‚¢‚æ‚¤‚É•‚ğ§ŒÀ
+            // ç”»åƒã«ã‚ˆã£ã¦ãƒœã‚¿ãƒ³ãŒå¤§ãããªã‚Šã™ãã¦ã—ã¾ã‚ãªã„ã‚ˆã†ã«å¹…ã‚’åˆ¶é™
             style = { width = 20 } 
         };
         sampleButton.clicked += () => setingMenu.CreateMenu();
@@ -59,9 +62,5 @@ public  class BookmarkBar
         });
         leftZone.Add(sampleButton);
 
-    }
-    private static void CreateCube() {
-        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        
     }
 }

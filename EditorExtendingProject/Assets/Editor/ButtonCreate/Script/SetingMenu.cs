@@ -1,45 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 using Toolbar = UnityEditor.UIElements.Toolbar;
-using UnityEditor.PackageManager;
-using PlasticGui.WorkspaceWindow.PendingChanges;
 using System.Linq;
-using System;
-using Object = UnityEngine.Object;
-using System.IO;
-
+/// <summary>
+///　拡張ウィンドウの設定クラス
+/// </summary>
 public class SetingMenu : EditorWindow
 {
-    private BookmarkBar BookmarkBar { get; set; }
-    public Object @object2;
     public static BookmarkSetting bookmarkSetting;
     private ObjectField[] objectFields = new ObjectField[4];
-    private void OnEnable()
-    {
-
-    }
+    private string path = "Assets/Editor/ButtonCreate/bookmarkSetting.asset";
+    /// <summary>
+    /// 拡張ウィンドウの表示
+    /// </summary>
     public void CreateMenu()
-    {//BookmarkBar bookmarkBar
+    {
         SetingMenu graphEditorWindow = CreateInstance<SetingMenu>();
         graphEditorWindow.Show();
-        graphEditorWindow.Intialize();
-        graphEditorWindow.Load();
-        graphEditorWindow.SetValue();
-        //BookmarkBar=bookmarkBar;
     }
+    private void OnEnable()
+    {
+        Intialize();
+        Load();
+        SetValue();
+    }
+    /// <summary>
+    /// 拡張ウィンドウの要素設定
+    /// </summary>
     private void Intialize() {
         VisualElement visualElement = this.rootVisualElement;
-        var toolbar = new Toolbar();
+        Toolbar toolbar = new();
         visualElement.Add(toolbar);
-        var text = new Box();
-        text.Add(new Label("�����P�`�R�ɐ�����������Object�����Ă�������"));
+        Box text = new();
+        text.Add(new Label("生成１～３に生成させたいObjectを入れてください"));
         visualElement.Add(text);
-        visualElement.Add(new Label("�ۑ���"));
-        //ObjectField�̐ݒ�
+        visualElement.Add(new Label("保存先"));
+        //ObjectFieldの設定
         for (int count = 0; count < objectFields.Count(); count++)
         {
             objectFields[count] = new ObjectField();
@@ -49,7 +47,7 @@ public class SetingMenu : EditorWindow
                 objectFields[count].objectType = typeof(BookmarkSetting);
             }
         }
-        //For���ŉ񂷂�IndexOver�ɂȂ�
+        //For文で回すとIndexOverになる
         objectFields[1].RegisterCallback<ChangeEvent<string>>(events =>
         {
             OnChange(objectFields[1].value,1);
@@ -61,54 +59,67 @@ public class SetingMenu : EditorWindow
             OnChange(objectFields[3].value,3);
         });
 
-
         visualElement.Add(objectFields[0]);
-        visualElement.Add(new Label("����1"));
+        visualElement.Add(new Label("生成1"));
         visualElement.Add(objectFields[1]);
 
-        visualElement.Add(new Label("����2"));
+        visualElement.Add(new Label("生成2"));
         visualElement.Add(objectFields[2]);
 
-        visualElement.Add(new Label("����3"));
+        visualElement.Add(new Label("生成3"));
         visualElement.Add(objectFields[3]);
 
 
     }
+    /// <summary>
+    /// 生成するオブジェクトを保存する
+    /// </summary>
     private void Load() {
-        var path = "Assets/bookmarkSetting.asset";
         bookmarkSetting = AssetDatabase.LoadAssetAtPath<BookmarkSetting>(path);
         if (bookmarkSetting == null)
-        { // ���[�h����null�������瑶�݂��Ȃ��̂Ő���
+        { // ロードしてnullだったら存在しないので生成
             bookmarkSetting = ScriptableObject.CreateInstance<BookmarkSetting>(); 
             AssetDatabase.CreateAsset(bookmarkSetting, path);
         }
 
 
     }
+    /// <summary>
+    /// 保存先の値を挿入する
+    /// </summary>
     private void SetValue() {
-        //�l���}������Ă�����X�V
+        //値が挿入されていたら更新
         if (bookmarkSetting != null)
         {
             objectFields[0].value = bookmarkSetting;
             for (int count = 0; count < bookmarkSetting.bookmarks.Count(); count++)
             {
-                objectFields[count + 1].value = bookmarkSetting.bookmarks[count].GameObject;
+                objectFields[count + 1].value = bookmarkSetting.bookmarks[count].saveObject;
 
             }
         }
     }
+    /// <summary>
+    /// セットされたオブジェクトを保存先と変更する
+    /// </summary>
+    /// <param name="object">設定したいオブジェクト</param>
+    /// <param name="count">配列の順番</param>
     private void OnChange(UnityEngine.Object @object,int count)
     {
         if (@object is GameObject gameObject) {
-            bookmarkSetting.bookmarks[count-1].GameObject = gameObject;
+            bookmarkSetting.bookmarks[count-1].saveObject = gameObject;
             EditorUtility.SetDirty(bookmarkSetting); 
         }
 
     }
-    public void pase(int Number)
+    /// <summary>
+    /// 配列に保存してあるオブジェクトをInstantiateする
+    /// </summary>
+    /// <param name="number">配列の順番</param>
+    public void Create(int number)
     {
         Load();
-        GameObject createObject = bookmarkSetting.bookmarks[Number-1].GameObject;
+        GameObject createObject = bookmarkSetting.bookmarks[number-1].saveObject;
         Instantiate(createObject);
     }
 }
