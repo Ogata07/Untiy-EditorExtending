@@ -6,6 +6,8 @@
         <ui:TextField picking-mode="Ignore" label="テンプレートのデフォルト名" value="filler text" text="NewScript" name="DefaultText" />
         <ui:Label text="スクリプトテンプレートを使う場合は一度Unityを開きなおして下さい" display-tooltip-when-elided="true" />
     </ui:GroupBox>
+    <ExampleElements.ColorAndText />
+    <ExampleElements.ObjectElement />
     <ui:GroupBox name="ButtonGroup" style="flex-direction: row; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
         <ui:Button text="作成" display-tooltip-when-elided="true" name="Create" style="height: auto; width: 100%; white-space: nowrap; -unity-text-align: middle-center; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
     </ui:GroupBox>

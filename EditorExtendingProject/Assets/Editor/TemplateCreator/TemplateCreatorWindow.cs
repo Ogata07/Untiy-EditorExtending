@@ -9,7 +9,7 @@ public class TemplateCreatorWindow : EditorWindow
     //拡張ウィンドウの
     public VisualTreeAsset uIDocument = default;
     //スクリプトテンプレート用txtの保存先フォルダパス
-    private const string folderPath = "Assets/ScriptTemplates";
+    private const string FolderPath = "Assets/ScriptTemplates";
     private static readonly string defaultCode = @"
         using System;
         using System.Collections;
@@ -46,9 +46,9 @@ public class TemplateCreatorWindow : EditorWindow
     /// スクリプトテンプレートを保存するフォルダを検索して無かったら作成
     /// </summary>
     private void Load() {
-        if (!Directory.Exists(folderPath)) { 
-            Directory.CreateDirectory(folderPath);
-            AssetDatabase.ImportAsset(folderPath);
+        if (!Directory.Exists(FolderPath)) { 
+            Directory.CreateDirectory(FolderPath);
+            AssetDatabase.ImportAsset(FolderPath);
             UnityEngine.Debug.Log("フォルダが未作成だったので生成しました(生成名　ScriptTemplates)");
             AssetDatabase.Refresh();
         }
