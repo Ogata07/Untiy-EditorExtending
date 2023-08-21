@@ -2,6 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
+using OpenCover.Framework.Model;
+using UnityEngine.Windows;
+using System.IO;
+using UnityEngine.UI;
+using UnityEditor;
+
 namespace ExampleElements
 {
     public class ObjectElement : VisualElement
@@ -51,7 +57,16 @@ namespace ExampleElements
             element.style.paddingBottom = px;
         }
         public static void Chack(ChangeEvent<UnityEngine.Object> evt) {
-            Debug.Log(evt.newValue.ToString());
+            chac(evt.newValue);
+        }
+        public static void chac(UnityEngine.Object @object) {
+            var path=AssetDatabase.GetAssetPath( @object );
+            Debug.Log(path);
+            string text= System.IO.File.ReadAllText(path);
+            Debug.Log(text) ;
+
+            //string data= System.IO.File.ReadAllText(@object);
+            //Debug.Log(data);
         }
     }
 }
