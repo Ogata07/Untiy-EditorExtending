@@ -9,7 +9,6 @@
 「生成１～３」ボタンを押すと先ほど設定したオブジェクトが生成されます
 
 <br>・TemplateCreator<br>
-![スクリーンショット 2023-07-09 140019](https://github.com/Ogata07/Untiy-EditorExtending/assets/104404907/deed469f-43d0-4b5a-aa61-58a29eaa8011)
 ![スクリーンショット 2023-08-27 050538](https://github.com/Ogata07/Untiy-EditorExtending/assets/104404907/ccbd3859-7984-4513-a795-22dfa7e2dda3)
 <br>使い方
 「Tool」→「TemplateCreator」を選択して上画像のウィンドウを出して各種値を設定して「作成」ボタンを押すとスクリプトテンプレートが生成されます。
