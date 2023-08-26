@@ -4,7 +4,8 @@
         <ui:TextField picking-mode="Ignore" label="表示順番号" value="filler text" text="95" name="NumberText" />
         <ui:TextField picking-mode="Ignore" label="メニュの項目名" value="filler text" text="CreateC＃" name="MenuText" />
         <ui:TextField picking-mode="Ignore" label="テンプレートのデフォルト名" value="filler text" text="NewScript" name="DefaultText" />
-        <ui:Label text="スクリプトテンプレートを使う場合は一度Unityを開きなおして下さい" display-tooltip-when-elided="true" />
+        <ExampleElements.ObjectElement />
+        <ui:Label text="スクリプトテンプレートを使う場合は一度Unityを開きなおして下さい&#10;このウィンドウを開いたときにScriptTemplatesフォルダがない場合は自動で生成されます。&#10;作成したテンプレートはScriptTemplatesフォルダに保存されます。&#10;参考にするスクリプトにスクリプトを置くとクラス名だけ変更されたテンプレートが生成されます。" display-tooltip-when-elided="true" style="white-space: normal;" />
     </ui:GroupBox>
     <ui:GroupBox name="ButtonGroup" style="flex-direction: row; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
         <ui:Button text="作成" display-tooltip-when-elided="true" name="Create" style="height: auto; width: 100%; white-space: nowrap; -unity-text-align: middle-center; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
