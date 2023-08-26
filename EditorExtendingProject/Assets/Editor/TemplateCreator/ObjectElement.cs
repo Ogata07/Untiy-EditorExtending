@@ -27,19 +27,17 @@ namespace ExampleElements
             SetMargin(label, 0);
             SetPadding(label, 0);
             label.style.width = new StyleLength(new Length(50, LengthUnit.Percent));
-            label.text="参考にしたいスクリプト";
+            label.text="参考にするスクリプト";
             Add(label);
 
             objectField = new ObjectField();
+            objectField.name = "TextScript";
             objectField.objectType = typeof(UnityEngine.Object );
             SetMargin(objectField, 0);
             SetPadding(objectField, 0);
             objectField.style.width = new StyleLength(new Length(50, LengthUnit.Percent));
             Add(objectField);
 
-            //objectField.RegisterValueChangedCallback(x => label.text = x.newValue.ToString());
-            //objectField.RegisterValueChangedCallback(x=> ObjectElement.Chack());
-            objectField.RegisterValueChangedCallback(Chack);
         }
         private static void SetMargin(VisualElement element, float px)
         {
@@ -55,18 +53,6 @@ namespace ExampleElements
             element.style.paddingTop = px;
             element.style.paddingRight = px;
             element.style.paddingBottom = px;
-        }
-        public static void Chack(ChangeEvent<UnityEngine.Object> evt) {
-            chac(evt.newValue);
-        }
-        public static void chac(UnityEngine.Object @object) {
-            var path=AssetDatabase.GetAssetPath( @object );
-            Debug.Log(path);
-            string text= System.IO.File.ReadAllText(path);
-            Debug.Log(text) ;
-
-            //string data= System.IO.File.ReadAllText(@object);
-            //Debug.Log(data);
         }
     }
 }
