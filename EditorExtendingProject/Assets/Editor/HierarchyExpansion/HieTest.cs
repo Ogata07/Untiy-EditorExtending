@@ -5,38 +5,39 @@ using UnityEditor;
 
 public static class HieTest 
 {
-    private const int WIDTH = 16;
-    private const int OFFSET= 10;
-
+    //表示が重なっている場合をどうにかしたい
 
     //Unityエディタ起動時やコンパイル時によびだし
     [InitializeOnLoadMethod]
     private static void Initalize() {
         //ヒエラルキーで文字が描画されている範囲をコールバックとして取得する
-        EditorApplication.hierarchyWindowItemOnGUI += OnGUI;
+        EditorApplication.hierarchyWindowItemOnGUI += OnTag;
     }
-
-    private static void OnGUI(int instanceID, Rect selectionRect)
+    /// <summary>
+    /// 横にオブジェクトのタグを表示する
+    /// </summary>
+    /// <param name="instanceID">対象のオブジェクトのID</param>
+    /// <param name="selectionRect">ヒエラルキー内での対象のオブジェクトの場所</param>
+    private static void OnTag(int instanceID, Rect selectionRect)
     {
+        // instanceID をオブジェクト参照に変換
         var go = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
+        //変換できない場合はReturn
         if (go == null)
         {
             return;
         }
 
-        var pos = selectionRect;
-        pos.x = pos.xMax - OFFSET;
-        pos.width = WIDTH;
+        // タグを取得
+        string tagValue = go.tag as string;
+        //標示する内容の場所
+        Debug.Log(selectionRect.xMax);//現在の枠のX大きさ
+        selectionRect.x = selectionRect.xMax - 100;
+        //大きさに合わせて表示させたい
+        //高さ
+        //selectionRect.width = 1;
+        GUI.Label(selectionRect, tagValue);
 
-        bool active = GUI.Toggle(pos, go.activeSelf, string.Empty);
-        if (active == go.activeSelf) {
-            return;
-        }
-
-        //アクティブ変更時にRecordObjectとSetActiveを行う(シーンの切り替え等でも設定が保存されている)
-        Undo.RecordObject(go, $"{(active ? "Activate" : "Deactivate")} GameObject '{go.name}'");
-        go.SetActive(active);
-        EditorUtility.SetDirty(go);
     }
 
 }
