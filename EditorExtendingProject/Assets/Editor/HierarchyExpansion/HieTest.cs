@@ -36,18 +36,18 @@ public static class HieTest
 
         // タグを取得
         string tagValue = go.tag as string;
+        string layerValue = LayerMask.LayerToName( go.layer);
+        string displayText = tagValue + " : " + layerValue;
         //表示する内容の場所
         //Debug.Log(selectionRect.position);//現在の枠のX大きさ
-        Debug.Log(go.name.Length*12);
-        if (selectionRect.position.x > go.name.Length * 18) {
-            Debug.LogError("はみ出ています");
-        }
+        Debug.Log(selectionRect.xMax);
+
         selectionRect = new Rect(selectionRect.position, selectionRect.size);
-        selectionRect.x = 52+go.name.Length * 12;//selectionRect.xMax - 100;
+        selectionRect.x = selectionRect.xMax-(100);//selectionRect.xMax - 100;//tagValue.Length*5
         //大きさに合わせて表示させたい
         //高さ
         //selectionRect.width = 1;
-        GUI.Label(selectionRect, tagValue);
+        GUI.Label(selectionRect, displayText);
 
     }
 
@@ -87,9 +87,12 @@ public static class HieTest
             GUIStyle style = new GUIStyle(EditorStyles.label);
             float fontSize = style.fontSize;
 
-            Rect labelRect = new Rect(selectionRect.x + selectionRect.width-300, selectionRect.y, 100f, selectionRect.height);
+            Rect labelRect = new Rect(selectionRect.x + selectionRect.width, selectionRect.y, 100f, selectionRect.height);
 
             EditorGUI.LabelField(labelRect, "Font Size: " + fontSize);
         }
+    }
+    static bool DuplicatDecision(int instanceID, Rect selectionRect) {
+        return false;
     }
 }
